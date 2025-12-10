@@ -47,5 +47,22 @@ class Controller:
         self._view.page.update()
 
     """Implementare la parte di ricerca del cammino minimo"""
-    # TODO
+    def handle_cammino_minimo(self, e):
+
+        soglia = float(self._view.txt_soglia.value)
+        cammino_migliore = self._model.cammino_minimo_dfs(soglia)
+        self._view.lista_visualizzazione_3.controls.clear()
+
+        for i in range(1, len(cammino_migliore)):
+            id1=cammino_migliore[i-1] #id del primo rifugio
+            id2=cammino_migliore[i] #id del secondo rifugio
+            rifugio1 = cammino_migliore[i-1].nome
+            rifugio2 = cammino_migliore[i].nome
+            peso = self._model.G[id1][id2]['peso']
+            localita_rifugio1 =cammino_migliore[i-1].localita
+            localita_rifugio2 = cammino_migliore[i].localita
+            self._view.lista_visualizzazione_3.controls.append(ft.Text(f"{rifugio1} ({localita_rifugio1})"
+                                                                       f"---> {rifugio2} ({localita_rifugio2})"
+                                                                       f" [{peso}]"))
+        self._view.page.update()
 
